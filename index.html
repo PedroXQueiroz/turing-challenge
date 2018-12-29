@@ -4,19 +4,27 @@
         <meta charset="utf-8">
         <title>Frontend Coding Challenge</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="/index.css" type="" >
+
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        
+        <script src="/clients/twitter-client.js" type="text/babel"> </script>
+
+        <script src="/components/tweet.js" type="text/babel"> </script>
+        <script src="/components/tweets-column.js" type="text/babel"> </script>
+        <script src="/components/tweets-grid.js" type="text/babel"> </script>
+        <script src="/components/tweets-app.js" type="text/babel"> </script>
+        
     </head>
     <body>
-        <h1>Frontend Coding Challenge</h1>
-        <p>You're all set! Now let's get to the action!</p>
-        <h2>Choose your flavor</h2>
-        <p>Feel free to choose whatever frontend technologies you are comfortable with in your code challenge.</p>
-        <p>The important thing is to demonstrate your technical knowledge and attention to quality.<p>
-        <h2>Run your app</h2>
-        <p>If you're not yet running the static server, you can do so by running the following command on your terminal:</p>
-        <pre>npm start</pre>
-        <h2>Twitter API</h2>
-        <p>The proxy server should be already running in the background. If you provided correct credentials for your Twitter API and Twitter Secret Key, you should now be able to use the api as the example below:</p>
-        <pre>http://localhost:7890/1.1/statuses/user_timeline.json?count=30&screen_name=makeschool</pre>
+            
+        <TweetsApp> </TweetsApp>
+    
     </body>
 </html>
 
