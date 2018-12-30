@@ -4,64 +4,47 @@ class TweetsGrid extends React.Component {
         super();
         this._twitterClient = new TwitterClient();
         
+        this._localStorageClient = new LocalStorageClient();
+
+
         this.state = { 
-            userTweetsDict:[
-                {
-                    userName:'MakeSchool',
-                    tweets: [] 
-                },{
-                    userName: 'newsycombinator',
-                    tweets: []
-                },{
-                    userName: 'ycombinator',
-                    tweets: []
-                }
-            ]
+            isEditing: false,
+            timeLinesConfig: []
         };
-
-
     }
     
     async componentWillMount(){
-        
-        for(var entryIndex = 0; entryIndex < this.state.userTweetsDict.length; entryIndex++)
-        {
-            var currentEntry = this.state.userTweetsDict[entryIndex];
-            
-            var tweets = await this._twitterClient.getTweets(currentEntry.userName, 30);
-            this.setState((state, props) => {
-                state.userTweetsDict[entryIndex].tweets = tweets;
-                return state;
-            })
-        }
-        
+        var configs = await this._localStorageClient.getTimeLinesConfig();
+        this.setState(() => {
+            return { timeLinesConfig: configs };
+        })
     }
-    
+
     render() {
         
         return (
             <div className="container tweets-container">
+                <div className="row edition-painel">
+                    <a className="btn btn-default btn-sm edit-grid-button" href="/grid-config">
+                        <span className="fas fa-cog"></span> Edit
+                    </a>
+                </div>
                 
-                {this.state.userTweetsDict.map((entry) => 
-                    
-                    <TweetsColumn
-                        userName = {entry.userName}>
+                <div className="row">
+                    {this.state.timeLinesConfig.map((entry) => 
                         
-                        {
-                            entry.tweets.map( tweet => 
-                                <Tweet 
-                                    content={tweet.text} 
-                                    createdAt={tweet.created_at} 
-                                    link={ !tweet.entities.urls[0] ? '' : tweet.entities.urls[0].expanded_url} > 
-                                </Tweet>
-                            )
-                        }
-
-                    </TweetsColumn>
-                    
-                )}
-
+                        <TimeLine
+                            userName = {entry.userName}
+                            maxTweets = {entry.maxTweets}
+                            isEditing = {this.state.isEditing} 
+                            limitDate = {entry.limitDate}>
+                        </TimeLine>
+                        
+                    )}
+                </div>
             </div>
         );
     };
 }
+
+ReactDOM.render(<TweetsGrid />, document.querySelector('TweetsGrid'));

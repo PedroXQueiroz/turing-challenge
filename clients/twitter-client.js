@@ -1,8 +1,5 @@
 class TwitterClient{
-    constructor(){
-        
-    }
-
+    
     getTweets = async function(userName, tweetsCount){
         
         var getTweetsUrl = 'http://localhost:7890/1.1/statuses/user_timeline.json?count=' + tweetsCount + ' &screen_name=' + userName
