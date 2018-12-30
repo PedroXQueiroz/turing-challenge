@@ -33,11 +33,16 @@ class TweetsGridConfig extends Component{
                 <div class="row"> <h3> Theme </h3> </div>
                 
                 <div class="row">
-                    <select>
-                        <option> gray scale </option>
-                        <option> blue scale </option>
-                    </select>
+                    <div class="form-group col-md-6">
+                        <select class="form-control">
+                            <option> gray scale </option>
+                            <option> blue scale </option>
+                        </select>
+                    </div>
+                    
                 </div>
+
+                <hr class="row"/>
                 
                 <div class="row"> <h3> TimeLines </h3> </div>
 

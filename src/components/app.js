@@ -10,22 +10,25 @@ class App extends Component{
         return(
         <BrowserRouter>
             <div>
-                <nav>
-                    <Link to="/">
-                        <h2> Tweets </h2>
-                    </Link>
-                    
-                    <Link to="/config">
-                        <button className="btn btn-default btn-sm edit-grid-button" href="/config">
-                            <span className="fa fa-cog"></span> Edit
-                        </button>
-                    </Link>
+                <nav class="app-header">
+                    <div>
+                        <Link to="/">
+                            <h2> Tweets </h2>
+                        </Link>
+                        
+                        <Link to="/config">
+                            <button className="btn btn-default btn-sm edit-grid-button" href="/config">
+                                <span className="fa fa-cog"></span> Edit
+                            </button>
+                        </Link>
+                    </div>
                 </nav>
-                <div>
-                        <Switch>
-                            <Route path="/" exact={true} component={TweetsGrid} />
-                            <Route path="/config" component={TweetsGridConfig} />
-                        </Switch>
+                
+                <div className="page-container">
+                    <Switch>
+                        <Route path="/" exact={true} component={TweetsGrid} />
+                        <Route path="/config" component={TweetsGridConfig} />
+                    </Switch>
                 </div>
             </div>
         </BrowserRouter>

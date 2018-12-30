@@ -2,6 +2,27 @@
     --font-color : #969696;
 }
 
+.app-header{
+    top: 0;
+    height: 5rem;
+    width: 100%;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.app-header > div{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 80rem;
+}
+
+.page-container{
+    width: 100%;
+    padding: 10px;
+}
+
 .tweet{
     padding: 5px;
     color: var(--font-color);
@@ -9,11 +30,11 @@
 
 .tweets-container{
     width: 100%;
-    margin-top: 20px;
 }
 
-.edition-painel{
-    justify-content: flex-end;
+.time-line-config{
+    padding: 5px;
+    color: var(--font-color);
 }
 
 .form-group.floating-label{
@@ -28,7 +49,6 @@
     margin-left: 17px;
 }
 
-
 .form-group.floating-label input:not(:placeholder-shown) + label{
     font-size: 0.75rem;
     position: absolute;
@@ -42,7 +62,3 @@
     padding-bottom: 0px;
 }
 
-.time-line-config{
-    padding: 5px;
-    color: var(--font-color);
-}
