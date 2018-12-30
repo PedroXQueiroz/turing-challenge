@@ -14,7 +14,7 @@ class TweetsGridConfig extends Component{
 
     async componentWillMount(){
         var configs = await this._localStorageClient.getTimeLinesConfig();
-        this.setState((state, props) => {
+        this.setState((staten, props) => {
             return { timeLinesConfig: configs };
         });
     }

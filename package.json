@@ -13,6 +13,7 @@
     "moment": "^2.23.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-router-dom": "^4.3.1",
     "twitter-proxy": "^2.0.0",
     "webfonts-loader": "^4.3.0",
     "webpack": "^4.28.3"
