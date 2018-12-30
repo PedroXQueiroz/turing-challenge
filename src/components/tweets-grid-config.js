@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import ReactDOM from "react-dom";
 
+import LocalStorageClient from '../clients/local-storage-client';
+
+import TimeLineConfig from './time-line-config';
+
 class TweetsGridConfig extends Component{
     
     constructor(){
@@ -56,5 +60,3 @@ class TweetsGridConfig extends Component{
 }
 
 export default TweetsGridConfig;
-
-ReactDOM.render(<TweetsGridConfig />, document.querySelector('TweetsGridConfig'));

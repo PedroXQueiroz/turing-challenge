@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 
+import LocalStorageClient from '../clients/local-storage-client';
+import * as moment from 'moment';
+
 class TimeLineConfig extends Component{
 
-    static _configToSwap = null;
-    
     constructor(props){
         super();
         
@@ -16,65 +17,65 @@ class TimeLineConfig extends Component{
         };
 
         this._localStorageClient = new LocalStorageClient();
-    }
 
-    onDragOver = e => this.onDragOverHandler(e);
+        this.onDragOver = e => this.onDragOverHandler(e);
     
-    onDragOverHandler = function(e)
-    {
-        var timeLineConfigCard = e.target.closest('.time-line-config');
-        TimeLineConfig._configToSwap = this;
-    }
-
-    onDragEnd = e => this.onDragEndHandler(e);
-
-    onDragEndHandler = async function(e)
-    {
-        var configs = await this._localStorageClient.getTimeLinesConfig();
-        
-        var currentDroppedConfigIndex = configs.findIndex(config => config.id == this.state.id);
-        var configToSwapIndex = configs.findIndex(config => config.id == TimeLineConfig._configToSwap.state.id);
-
-        var currentConfig = configs[currentDroppedConfigIndex];
-        configs[currentDroppedConfigIndex] = configs[configToSwapIndex];
-        configs[configToSwapIndex] = currentConfig;
-
-        await this._localStorageClient.setIimeLinesConfig(configs);
+        this.onDragOverHandler = function(e)
+        {
+            var timeLineConfigCard = e.target.closest('.time-line-config');
+            TimeLineConfig._configToSwap = this;
+        }
+    
+        this.onDragEnd = e => this.onDragEndHandler(e);
+    
+        this.onDragEndHandler = async function(e)
+        {
+            var configs = await this._localStorageClient.getTimeLinesConfig();
             
-        var swapState = TimeLineConfig._configToSwap.state;
-        var currentConfigState = this.state;
-        this.setState((state, props) => swapState );
-        TimeLineConfig._configToSwap.setState((state, props) => currentConfigState );
-    }
-
-    onChangeUserName = e => this.onChangeUserNameHandler(e);
+            var currentDroppedConfigIndex = configs.findIndex(config => config.id == this.state.id);
+            var configToSwapIndex = configs.findIndex(config => config.id == TimeLineConfig._configToSwap.state.id);
     
-    onChangeUserNameHandler = function(e){
-        var newUserName = e.target.value;
-        this.setState(() => { 
-            return { userName: newUserName } 
-        }, () => this._localStorageClient.updateTimeLineConfig(this.state));
-    }
-
-    onChangeMaxTweets = e => this.onChangeMaxTweetsHandler(e);
-
-    onChangeMaxTweetsHandler = function(e){
-        var newMaxTweet = e.target.value;
-        this.setState(() => { 
-            return { maxTweets: newMaxTweet } 
-        }, () => this._localStorageClient.updateTimeLineConfig(this.state));
-    }
-
-    onChangeLimitDate = e => this.onChangeLimitDateHandler(e);
-
-    onChangeLimitDateHandler = function(e){
-        var newLimitDateStr = e.target.value;
-        var newLimitDate = moment(newLimitDateStr).toDate();
-        var newLimitTime = newLimitDate.getTime();
+            var currentConfig = configs[currentDroppedConfigIndex];
+            configs[currentDroppedConfigIndex] = configs[configToSwapIndex];
+            configs[configToSwapIndex] = currentConfig;
+    
+            await this._localStorageClient.setIimeLinesConfig(configs);
+                
+            var swapState = TimeLineConfig._configToSwap.state;
+            var currentConfigState = this.state;
+            this.setState((state, props) => swapState );
+            TimeLineConfig._configToSwap.setState((state, props) => currentConfigState );
+        }
+    
+        this.onChangeUserName = e => this.onChangeUserNameHandler(e);
         
-        this.setState(() => { 
-            return { limitDate: newLimitTime } 
-        }, () => this._localStorageClient.updateTimeLineConfig(this.state));
+        this.onChangeUserNameHandler = function(e){
+            var newUserName = e.target.value;
+            this.setState(() => { 
+                return { userName: newUserName } 
+            }, () => this._localStorageClient.updateTimeLineConfig(this.state));
+        }
+    
+        this.onChangeMaxTweets = e => this.onChangeMaxTweetsHandler(e);
+    
+        this.onChangeMaxTweetsHandler = function(e){
+            var newMaxTweet = e.target.value;
+            this.setState(() => { 
+                return { maxTweets: newMaxTweet } 
+            }, () => this._localStorageClient.updateTimeLineConfig(this.state));
+        }
+    
+        this.onChangeLimitDate = e => this.onChangeLimitDateHandler(e);
+    
+        this.onChangeLimitDateHandler = function(e){
+            var newLimitDateStr = e.target.value;
+            var newLimitDate = moment(newLimitDateStr).toDate();
+            var newLimitTime = newLimitDate.getTime();
+            
+            this.setState(() => { 
+                return { limitDate: newLimitTime } 
+            }, () => this._localStorageClient.updateTimeLineConfig(this.state));
+        }
     }
 
     formatDate(date){
@@ -127,5 +128,7 @@ class TimeLineConfig extends Component{
         );
     }
 }
+
+TimeLineConfig._configToSwap = null;
 
 export default TimeLineConfig;
