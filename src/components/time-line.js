@@ -27,6 +27,21 @@ class TimeLine extends Component{
             };
         })
     }
+
+    getMediasArray(tweet)
+    {
+        if(tweet.extended_entities)
+        {
+            return tweet.extended_entities.media || []
+        }
+        
+        if( tweet._entities)
+        {
+            return tweet._entities || [];
+        }
+
+        return [];
+    }
     
     render(){
         return(
@@ -47,10 +62,12 @@ class TimeLine extends Component{
                         })
                         .map(tweet =>
                         <Tweet
+                            userName = { this.state.userName }
+                            tweetId = { tweet.id_str }
                             content={ tweet.text || tweet.full_text } 
                             createdAt={ tweet.created_at } 
-                            link={ !tweet.entities.urls[0] ? '' : tweet.entities.urls[0].expanded_url }
-                            attachs = { tweet.entities.media || [] }
+                            link={ !( tweet.entities.urls && tweet.entities.urls.length > 0 )  ? '' : tweet.entities.urls[0].expanded_url }
+                            medias = { this.getMediasArray(tweet) }
                             hashtags = { tweet.entities.hashtags } 
                             >
                         </Tweet>

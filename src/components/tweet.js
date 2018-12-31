@@ -7,6 +7,8 @@ class Tweet extends ThemeSwitchableComponent{
         super();
 
         this.state = {
+            userName: props.userName,
+            tweetId: props.tweetId,
             content: props.content,
             createdAt: props.createdAt,
             link: props.link,
@@ -16,20 +18,56 @@ class Tweet extends ThemeSwitchableComponent{
         
     }
 
+    createMediaElement(media){
+        
+        switch(media.type)
+        {
+            case 'video':
+                var videoSource = media.video_info.variants.find( vari => vari.content_type.indexOf('video') > -1 );
+                
+                return (
+                    <video autoPlay loop muted>
+                        <source src={videoSource.url} type={videoSource.content_type} />
+                    </video>
+                )
+            break;
+
+            case 'photo':
+                return <img src={media.media_url_https}/>
+            break;
+        }
+        
+    }
+
+    getTweetLink(){
+        return 'https://twitter.com/' + this.state.userName + '/status/' + this.state.tweetId;
+    }
+
     render(){
         return (
             <div className="card tweet">
                     <div className="card-body">
+
+                        <div class="tweet-header">
+                            <span> <strong> {(new Date(this.state.createdAt).toLocaleDateString())} </strong> </span>
+                            <a href={ this.getTweetLink() } target="about_blank"> Go to tweet </a>
+                        </div>
                         
-                        <a href={this.state.link} target="about_blank">
-                            <div> {this.state.content} </div>
-                        </a>
+                        { 
+                            ( this.state.medias && this.state.medias.length > 0 ) &&
+                            <div class="tweet-media-container">
+
+                                {this.state.medias.map( media => this.createMediaElement(media))}
+
+                            </div>
+                        }
+
+                        <div> {this.state.content} </div>
                         
                         <div class="tweet-hashtags-container">
                             {this.state.hashtags.map( hashtag => <span>@{hashtag.text}</span>)}
                         </div>
                         
-                        <span> <strong> {(new Date(this.state.createdAt).toLocaleDateString())} </strong> </span>
                     
                     </div>
             </div>

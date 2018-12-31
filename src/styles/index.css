@@ -38,6 +38,22 @@
     padding: 2.5rem;
 }
 
+.tweet .tweet-header{
+    margin-bottom:1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.tweet .tweet-media-container{
+    margin-bottom: 1rem;
+}
+
+.tweet .tweet-media-container img,
+.tweet .tweet-media-container video{
+    width: 100%;
+    border-radius: 0.25rem;
+}
+
 .tweet{
     color: var(--font-color);
     margin: 1.5rem 0 1.5rem 0;
