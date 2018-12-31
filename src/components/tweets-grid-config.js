@@ -35,6 +35,26 @@ class TweetsGridConfig extends Component{
         await this._localStorageClient.setTheme(selectedTheme);
     }
 
+    getNextConfigId(index){
+        var nextIndex = index + 1;
+        
+        var configsCount = this.state.timeLinesConfig.length - 1;
+        
+        return nextIndex <= configsCount? this.state.timeLinesConfig[nextIndex].id : null;
+    }
+
+    getPreviousConfigId(index){
+        if(index <= 0){
+            return null;
+        }
+
+        var previousIndex = index - 1;
+
+        var configsCount = this.state.timeLinesConfig.length - 1;
+        
+        return previousIndex <= configsCount? this.state.timeLinesConfig[previousIndex].id : null;
+    }
+
     render(){
         return (
             <div className="container">
@@ -60,13 +80,15 @@ class TweetsGridConfig extends Component{
                 <div class="row"> <h3> TimeLines </h3> </div>
 
                 <div className="config-container row">
-                    {this.state.timeLinesConfig.map(config => 
+                    {this.state.timeLinesConfig.map((config, index) => 
                         <div className="time-line-config-container">
                             <TimeLineConfig
                                 configId={config.id}
                                 userName={config.userName}
                                 maxTweets={config.maxTweets}
                                 limitDate={config.limitDate}
+                                nextConfigId={this.getNextConfigId(index)}
+                                previousConfigId={this.getPreviousConfigId(index)}
                             /> 
                         </div>
                     )}

@@ -26,6 +26,35 @@ class LocalStorageClient{
         return configs;
     }
 
+    async getTimeLineConfig(configId){
+        var configs = await this.getTimeLinesConfig();
+        return configs.find(config => config.id == configId);
+    }
+
+    async getNextTimeLineConfig(configId){
+        var configs = await this.getTimeLinesConfig();
+        var configIndex = configs.findIndex(config => config.id == configId);
+
+        if(configIndex >= configs.length)
+        {
+            throw { message: 'no exists next time line configuration' };
+        }
+
+        return configs[configIndex + 1];
+    }
+
+    async getPreviousTimeLineConfig(configId){
+        var configs = await this.getTimeLinesConfig();
+        var configIndex = configs.findIndex(config => config.id == configId);
+
+        if(configIndex <= 0)
+        {
+            throw { message: 'no exists previous time line configuration' };
+        }
+
+        return configs[configIndex - 1];
+    }
+
     async setIimeLinesConfig(configs){
         
         var configsData = JSON.stringify(configs);

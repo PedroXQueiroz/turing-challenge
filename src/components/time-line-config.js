@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import EventEmitter from 'events';
 
 import LocalStorageClient from '../clients/local-storage-client';
 
@@ -16,7 +17,9 @@ class TimeLineConfig extends ThemeSwitchableComponent{
             userName : props.userName,
             maxTweets: props.maxTweets,
             limitDate: props.limitDate,
-            onDropCallback: props.onDropCallback
+            onDropCallback: props.onDropCallback,
+            nextConfigId: props.nextConfigId,
+            previousConfigId: props.previousConfigId
         };
 
         this._localStorageClient = new LocalStorageClient();
@@ -71,6 +74,45 @@ class TimeLineConfig extends ThemeSwitchableComponent{
                 return { limitDate: newLimitTime } 
             }, () => this._localStorageClient.updateTimeLineConfig(this.state));
         }
+
+        TimeLineConfig.swapTimeLinesConfigsEvent.addListener('swap-config', (swapTuple) => {
+            
+            var currentId = swapTuple.currentId;
+            var swapId = swapTuple.swapId;
+            
+            if(currentId != this.state.id)
+            {
+                return;
+            }
+            
+            this.loadConfigData(swapId);
+        });
+       
+        this.swapToNextConfig = e => this.swapToNextConfigHandler();
+
+        this.swapToNextConfigHandler = async function(){
+            var nextConfig = await this._localStorageClient.getNextTimeLineConfig(this.state.id);
+            await this._localStorageClient.swapTimeLinesConfigs(this.state.id, nextConfig.id);
+            
+            TimeLineConfig.swapTimeLinesConfigsEvent.emit('swap-config', {currentId: this.state.id, swapId: nextConfig.id});
+            TimeLineConfig.swapTimeLinesConfigsEvent.emit('swap-config', {currentId: nextConfig.id, swapId: this.state.id});
+        }
+        
+        this.swapToPreviousConfig = e => this.swapToPreviousConfigHandler();
+
+        this.swapToPreviousConfigHandler = async function(){
+            var previousConfig = await this._localStorageClient.getPreviousTimeLineConfig(this.state.id);
+            await this._localStorageClient.swapTimeLinesConfigs(this.state.id, previousConfig.id);
+            
+            TimeLineConfig.swapTimeLinesConfigsEvent.emit('swap-config', {currentId: this.state.id, swapId: previousConfig.id});
+            TimeLineConfig.swapTimeLinesConfigsEvent.emit('swap-config', {currentId: previousConfig.id, swapId: this.state.id});
+        }
+
+    }
+
+    async loadConfigData(configId){
+        var config = await this._localStorageClient.getTimeLineConfig(configId);
+        this.setState(config);
     }
 
     formatDate(date){
@@ -87,9 +129,9 @@ class TimeLineConfig extends ThemeSwitchableComponent{
                 <div class="card card-body" draggable="true" >
                     
                     <div class="row time-line-config-header">
-                        <i class="fa fa-angle-left"/>
+                        <i class="fa fa-angle-left" onClick={this.swapToPreviousConfig}/>
                         <span>Index</span>
-                        <i class="fa fa-angle-right"/>
+                        <i class="fa fa-angle-right" onClick={this.swapToNextConfig}/>
                     </div>
                     
                     <div className="form-group floating-label" draggable="false">
@@ -132,5 +174,7 @@ class TimeLineConfig extends ThemeSwitchableComponent{
 }
 
 TimeLineConfig._configToSwap = null;
+
+TimeLineConfig.swapTimeLinesConfigsEvent = new EventEmitter();
 
 export default TimeLineConfig;
