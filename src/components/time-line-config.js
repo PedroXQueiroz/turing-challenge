@@ -30,22 +30,14 @@ class TimeLineConfig extends ThemeSwitchableComponent{
         }
     
         this.onDragEnd = e => this.onDragEndHandler(e);
-    
+
         this.onDragEndHandler = async function(e)
         {
-            var configs = await this._localStorageClient.getTimeLinesConfig();
-            
-            var currentDroppedConfigIndex = configs.findIndex(config => config.id == this.state.id);
-            var configToSwapIndex = configs.findIndex(config => config.id == TimeLineConfig._configToSwap.state.id);
-    
-            var currentConfig = configs[currentDroppedConfigIndex];
-            configs[currentDroppedConfigIndex] = configs[configToSwapIndex];
-            configs[configToSwapIndex] = currentConfig;
-    
-            await this._localStorageClient.setIimeLinesConfig(configs);
+            await this._localStorageClient.swapTimeLinesConfigs(this.state.id, TimeLineConfig._configToSwap.state.id);
                 
             var swapState = TimeLineConfig._configToSwap.state;
             var currentConfigState = this.state;
+            
             this.setState((state, props) => swapState );
             TimeLineConfig._configToSwap.setState((state, props) => currentConfigState );
         }

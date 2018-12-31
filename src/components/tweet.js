@@ -67,7 +67,6 @@ class Tweet extends ThemeSwitchableComponent{
                             {this.state.hashtags.map( hashtag => <span>@{hashtag.text}</span>)}
                         </div>
                         
-                    
                     </div>
             </div>
         );

@@ -47,6 +47,20 @@ class LocalStorageClient{
         this.setIimeLinesConfig(configs);
     }
 
+    async swapTimeLinesConfigs(configId, configToSwapId){
+            
+        var configs = await this.getTimeLinesConfig();
+        
+        var configIndex = configs.findIndex(config => config.id == configId);
+        var configToSwapIndex = configs.findIndex(config => config.id == configToSwapId);
+
+        var config = configs[configIndex];
+        configs[configIndex] = configs[configToSwapIndex];
+        configs[configToSwapIndex] = config;
+
+        await this.setIimeLinesConfig(configs);
+    }
+
     async getTheme(theme){
         return await this._storage.getItem('theme', theme);
     }
