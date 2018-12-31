@@ -11,7 +11,6 @@ class Tweet extends ThemeSwitchableComponent{
             tweetId: props.tweetId,
             content: props.content,
             createdAt: props.createdAt,
-            link: props.link,
             medias: props.medias,
             hashtags: props.hashtags
         }
@@ -50,7 +49,7 @@ class Tweet extends ThemeSwitchableComponent{
 
                         <div class="tweet-header">
                             <span> <strong> {(new Date(this.state.createdAt).toLocaleDateString())} </strong> </span>
-                            <a href={ this.getTweetLink() } target="about_blank"> Go to tweet </a>
+                            <a href={ this.getTweetLink() } target="_blank"> Go to tweet </a>
                         </div>
                         
                         { 

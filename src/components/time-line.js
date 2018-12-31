@@ -66,7 +66,6 @@ class TimeLine extends Component{
                             tweetId = { tweet.id_str }
                             content={ tweet.text || tweet.full_text } 
                             createdAt={ tweet.created_at } 
-                            link={ !( tweet.entities.urls && tweet.entities.urls.length > 0 )  ? '' : tweet.entities.urls[0].expanded_url }
                             medias = { this.getMediasArray(tweet) }
                             hashtags = { tweet.entities.hashtags } 
                             >
