@@ -22,7 +22,7 @@
     max-width: 80rem;
 }
 
-.app-header > div a {
+.app-header > div a{
     top: 0;
     height: 100%;
     display: flex;
@@ -39,17 +39,33 @@
 }
 
 .tweet{
-    padding: 5px;
     color: var(--font-color);
+    margin: 1.5rem 0 1.5rem 0;
+    width: 100%;
 }
 
-.tweets-container{
-    width: 100%;
+.tweet-hashtags-container{
+    padding:0.25rem;
+}
+
+.tweet-hashtags-container span{
+    font-size:0.75rem;
+}
+
+.tweets-conatiner .col-md-4{
+    margin:0;
 }
 
 .time-line-config{
     padding: 5px;
     color: var(--font-color);
+}
+
+.time-line-config-header{
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    padding-top: 0;
 }
 
 .form-group.floating-label{
@@ -87,6 +103,7 @@
     color: #969696;
 }
 
+.minimalist .card a,
 .minimalist .card{
     background: white;
     color:#969696;
@@ -97,6 +114,8 @@
 }
 
 /* OCEAN THEME */
+
+
 .ocean .app-header{
     background: #107dac;
     color: white
@@ -107,6 +126,7 @@
     color: white;
 }
 
+.ocean .card a,
 .ocean .card{
     background: #71c7ec;
     color: white;
@@ -139,6 +159,7 @@
     color: white;
 }
 
+.dark .card a,
 .dark .card{
     background: #808080;
     color: white;

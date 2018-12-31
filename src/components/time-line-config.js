@@ -91,8 +91,15 @@ class TimeLineConfig extends ThemeSwitchableComponent{
                 className="time-line-config" 
                 onDragOver={this.onDragOver} 
                 onDragEnd={this.onDragEnd}> 
-
+                
                 <div class="card card-body" draggable="true" >
+                    
+                    <div class="row time-line-config-header">
+                        <i class="fa fa-angle-left"/>
+                        <span>Index</span>
+                        <i class="fa fa-angle-right"/>
+                    </div>
+                    
                     <div className="form-group floating-label" draggable="false">
                         <input  type="text" 
                                 className="form-control form-control-lg" 

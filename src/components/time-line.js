@@ -33,7 +33,7 @@ class TimeLine extends Component{
             <div className="col-md-4">
                 <h3>{this.state.userName}</h3>
 
-                <div className="tweetsContainer">
+                <div className="tweets-container">
                     
                     {this.state.tweets
                         .filter((tweet) => {
@@ -47,9 +47,12 @@ class TimeLine extends Component{
                         })
                         .map(tweet =>
                         <Tweet
-                            content={tweet.text} 
-                            createdAt={tweet.created_at} 
-                            link={ !tweet.entities.urls[0] ? '' : tweet.entities.urls[0].expanded_url} >
+                            content={ tweet.text || tweet.full_text } 
+                            createdAt={ tweet.created_at } 
+                            link={ !tweet.entities.urls[0] ? '' : tweet.entities.urls[0].expanded_url }
+                            attachs = { tweet.entities.media || [] }
+                            hashtags = { tweet.entities.hashtags } 
+                            >
                         </Tweet>
                     )}
                     
