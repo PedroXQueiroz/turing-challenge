@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import LocalStorageClient from '../clients/local-storage-client';
 
 import TimeLineConfig from './time-line-config';
+import ThemeSwitchableComponent from './theme-switchable-component';
 
 class TweetsGridConfig extends Component{
     
@@ -13,7 +14,10 @@ class TweetsGridConfig extends Component{
         this.state = {
             timeLinesConfig:[]
         };
+        
         this._localStorageClient = new LocalStorageClient();
+
+        this.changeTheme = e => this.changeThemeHandler(e);
     }
 
     async componentWillMount(){
@@ -21,6 +25,14 @@ class TweetsGridConfig extends Component{
         this.setState((staten, props) => {
             return { timeLinesConfig: configs };
         });
+    }
+
+    async changeThemeHandler(ev){
+        
+        var selectedTheme = ev.target.value;
+        
+        ThemeSwitchableComponent.switchTheme(selectedTheme);
+        await this._localStorageClient.setTheme(selectedTheme);
     }
 
     render(){
@@ -34,9 +46,10 @@ class TweetsGridConfig extends Component{
                 
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <select class="form-control">
-                            <option> gray scale </option>
-                            <option> blue scale </option>
+                        <select class="form-control" onChange={this.changeTheme}>
+                            <option value="minimalist" selected={ThemeSwitchableComponent.currentTheme == 'minimalist'}> minimalist </option>
+                            <option value="ocean" selected={ThemeSwitchableComponent.currentTheme == 'ocean'}> ocean </option>
+                            <option value="dark" selected={ThemeSwitchableComponent.currentTheme == 'dark'}> dark </option>
                         </select>
                     </div>
                     

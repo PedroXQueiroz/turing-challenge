@@ -1,3 +1,5 @@
+import ThemeSwitchableComponent from "../components/theme-switchable-component";
+
 class LocalStorageClient{
 
     static getDefaultDate()
@@ -43,7 +45,14 @@ class LocalStorageClient{
         configs[configIndex] = config;
 
         this.setIimeLinesConfig(configs);
+    }
 
+    async getTheme(theme){
+        return await this._storage.getItem('theme', theme);
+    }
+    
+    async setTheme(theme){
+        await this._storage.setItem('theme', theme);
     }
 }
 

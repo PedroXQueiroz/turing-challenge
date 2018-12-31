@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
 
 import LocalStorageClient from '../clients/local-storage-client';
+
+import ThemeSwitchableComponent from './theme-switchable-component';
+
 import * as moment from 'moment';
 
-class TimeLineConfig extends Component{
+class TimeLineConfig extends ThemeSwitchableComponent{
 
     constructor(props){
         super();

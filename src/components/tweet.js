@@ -1,6 +1,7 @@
+import ThemeSwitchableComponent from './theme-switchable-component';
 import React, {Component} from 'react';
 
-class Tweet extends Component{
+class Tweet extends ThemeSwitchableComponent{
 
     constructor(props){        
         super();

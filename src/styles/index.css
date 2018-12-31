@@ -1,5 +1,9 @@
 :root {
-    --font-color : #969696;
+    color : #969696;
+}
+
+.app > div {
+    min-height: 100vh;
 }
 
 .app-header{
@@ -18,9 +22,20 @@
     max-width: 80rem;
 }
 
+.app-header > div a {
+    top: 0;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
+.app-header > div a{
+    text-decoration: none;
+}
+
 .page-container{
     width: 100%;
-    padding: 10px;
+    padding: 2.5rem;
 }
 
 .tweet{
@@ -62,3 +77,73 @@
     padding-bottom: 0px;
 }
 
+/* MINIMALIST THEME */
+.minimalist .app-header{
+    background: white;
+}
+
+.minimalist .app-header a button,
+.minimalist .app-header a h2{
+    color: #969696;
+}
+
+.minimalist .card{
+    background: white;
+    color:#969696;
+}
+
+.minimalist .card .form-group label{
+    color: #969696;
+}
+
+/* OCEAN THEME */
+.ocean .app-header{
+    background: #107dac;
+    color: white
+}
+
+.ocean .app-header a button,
+.ocean .app-header a h2{
+    color: white;
+}
+
+.ocean .card{
+    background: #71c7ec;
+    color: white;
+}
+
+.ocean .card .form-group label{
+    color: #969696;
+}
+
+/* DARK THEME */
+.app > .dark{
+    background: #606060;
+}
+
+.dark h3,
+.dark h2{
+    color: #d6d6d6;
+}
+
+.dark hr{
+    background: #808080;
+}
+
+.dark .app-header{
+    background: #404040;
+}
+
+.dark .app-header a button,
+.dark .app-header a h2{
+    color: white;
+}
+
+.dark .card{
+    background: #808080;
+    color: white;
+}
+
+.dark .card .form-group label{
+    color: #969696;
+}
