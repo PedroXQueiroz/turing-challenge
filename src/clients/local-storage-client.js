@@ -31,6 +31,19 @@ class LocalStorageClient{
         return configs.find(config => config.id == configId);
     }
 
+    async getTimeLineConfigIndex(configId){
+        var configs = await this.getTimeLinesConfig();
+
+        var timeLineIndex = configs.findIndex(config => config.id == configId);
+
+        return timeLineIndex;
+    }
+
+    async getCountTimeLinesConfigs(){
+        var configs = await this.getTimeLinesConfig();
+        return configs.length;
+    }
+
     async getNextTimeLineConfig(configId){
         var configs = await this.getTimeLinesConfig();
         var configIndex = configs.findIndex(config => config.id == configId);

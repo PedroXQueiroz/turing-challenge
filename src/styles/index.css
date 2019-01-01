@@ -109,6 +109,10 @@
     padding-top: 0;
 }
 
+.time-line-config-header span{
+    font-size: 15px;
+}
+
 .config-container-scroll{
     display: flex;
     flex-wrap: wrap;

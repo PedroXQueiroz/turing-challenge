@@ -112,15 +112,29 @@ class TimeLineConfig extends ThemeSwitchableComponent{
                 hasNext: nextConfig ? true : false, 
                 hasPrevious: previousConfig? true : false
             } 
-        }, () => console.log(this.state));
+        });
+    }
+
+    async setIndex(configId){
+        var timelineIndex = await this._localStorageClient.getTimeLineConfigIndex(configId);
+        var countConfigs = await this._localStorageClient.getCountTimeLinesConfigs();
+
+        this.setState((state, props) => { 
+            return { 
+                index : timelineIndex, 
+                total: countConfigs 
+            } 
+        });
     }
 
     async loadConfigData(configId){
         
         var config = await this._localStorageClient.getTimeLineConfig(configId);
+ 
         this.setState(config);
 
-        await this.setupNextAndPrevious(configId)
+        await this.setupNextAndPrevious(configId);
+        await this.setIndex(configId);
     }
 
     formatDate(date){
@@ -129,6 +143,7 @@ class TimeLineConfig extends ThemeSwitchableComponent{
 
     componentWillMount(){
         this.setupNextAndPrevious(this.state.id);
+        this.setIndex(this.state.id);
     }
 
     render(){
@@ -142,7 +157,7 @@ class TimeLineConfig extends ThemeSwitchableComponent{
                     
                     <div class="row time-line-config-header">
                         {this.state.hasPrevious ? <i class="fa fa-angle-left" onClick={this.swapToPreviousConfig}/> : <i/>}
-                        <span>Index</span>
+                        <span> {this.state.index} / {this.state.total} </span>
                         {this.state.hasNext ? <i class="fa fa-angle-right" onClick={this.swapToNextConfig}/> : <i/>}
                     </div>
                     
