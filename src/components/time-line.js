@@ -45,7 +45,7 @@ class TimeLine extends Component{
     
     render(){
         return(
-            <div className="col-md-4">
+            <div className="col-lg-4">
                 <h3>{this.state.userName}</h3>
 
                 <div className="tweets-container">

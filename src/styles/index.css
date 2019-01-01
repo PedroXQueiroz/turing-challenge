@@ -38,6 +38,11 @@
     padding: 2.5rem;
 }
 
+.time-lines-container{
+    display: flex;
+    overflow: overlay;
+}
+
 .tweet .tweet-header{
     margin-bottom:1rem;
     display: flex;
@@ -68,8 +73,8 @@
     font-size:0.75rem;
 }
 
-.tweets-conatiner .col-md-4{
-    margin:0;
+.config-container{
+    justify-content: center;
 }
 
 .time-line-config{
@@ -97,6 +102,16 @@
 }
 
 @media (max-width: 750px){
+    
+    .tweets-container {
+        max-width: 100%;
+        width: 100vh;
+    }
+
+    .tweet{
+        min-width: 100%;
+    }
+    
     .time-line-config .card {
         flex-direction: row;
     }
@@ -113,6 +128,7 @@
 }
 
 @media (min-width: 750px){
+    
     .time-line-config .card {
         flex-direction: column;
     }

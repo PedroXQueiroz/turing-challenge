@@ -29,20 +29,19 @@ class TweetsGrid extends Component {
     render() {
         
         return (
-            <div className="container tweets-container">
+            <div className="time-lines-container">
                 
-                <div className="row">
-                    {this.state.timeLinesConfig.map((entry) => 
-                        
-                        <TimeLine
-                            userName = {entry.userName}
-                            maxTweets = {entry.maxTweets}
-                            isEditing = {this.state.isEditing} 
-                            limitDate = {entry.limitDate}>
-                        </TimeLine>
-                        
-                    )}
-                </div>
+                {this.state.timeLinesConfig.map((entry) => 
+                    
+                    <TimeLine
+                        userName = {entry.userName}
+                        maxTweets = {entry.maxTweets}
+                        isEditing = {this.state.isEditing} 
+                        limitDate = {entry.limitDate}>
+                    </TimeLine>
+                    
+                )}
+                
             </div>
         );
     };
