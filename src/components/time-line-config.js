@@ -140,46 +140,54 @@ class TimeLineConfig extends ThemeSwitchableComponent{
                 
                 <div class="card card-body" draggable="true" >
                     
-                    <div class="row time-line-config-header">
+                    <div class="row time-line-config-header top">
                         {this.state.hasPrevious ? <i class="fa fa-angle-left" onClick={this.swapToPreviousConfig}/> : <i/>}
                         <span>Index</span>
                         {this.state.hasNext ? <i class="fa fa-angle-right" onClick={this.swapToNextConfig}/> : <i/>}
                     </div>
                     
-                    <div className="form-group floating-label" draggable="false">
-                        <input  type="text" 
-                                className="form-control form-control-lg" 
-                                id="userName" 
-                                placeholder="UserName" 
-                                value={this.state.userName} 
-                                onChange={this.onChangeUserName}/>
-                        
-                        <label for="userName">UserName</label>
+                    <div>
+                        <div className="form-group floating-label" draggable="false">
+                            <input  type="text" 
+                                    className="form-control form-control-lg" 
+                                    id="userName" 
+                                    placeholder="UserName" 
+                                    value={this.state.userName} 
+                                    onChange={this.onChangeUserName}/>
+                            
+                            <label for="userName">UserName</label>
+                        </div>
+
+                        <div className="form-group floating-label" draggable="false">
+                            <input  type="number" 
+                                    className="form-control form-control-lg" 
+                                    id="maxTweet" 
+                                    placeholder="MaxTweet" 
+                                    value={this.state.maxTweets}
+                                    onChange={this.onChangeMaxTweets}/>
+                            
+                            <label for="maxTweet">MaxTweets</label>
+                        </div>
+
+                        <div className="form-group floating-label" draggable="false">
+                            <input  type="date" 
+                                    className="form-control form-control-lg" 
+                                    id="limitDateTweet" 
+                                    placeholder="LimitDate" 
+                                    value={this.formatDate( new Date(this.state.limitDate))}
+                                    onChange={this.onChangeLimitDate}
+                                    pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/>
+                            <label for="limitDateTweet">LimitDate</label>
+                        </div>
                     </div>
 
-                    <div className="form-group floating-label" draggable="false">
-                        <input  type="number" 
-                                className="form-control form-control-lg" 
-                                id="maxTweet" 
-                                placeholder="MaxTweet" 
-                                value={this.state.maxTweets}
-                                onChange={this.onChangeMaxTweets}/>
-                        
-                        <label for="maxTweet">MaxTweets</label>
+                    <div class="row time-line-config-header side">
+                        {this.state.hasPrevious ? <i class="fa fa-angle-up" onClick={this.swapToPreviousConfig}/> : <i/>}
+                        <span>Index</span>
+                        {this.state.hasNext ? <i class="fa fa-angle-down" onClick={this.swapToNextConfig}/> : <i/>}
                     </div>
-
-                    <div className="form-group floating-label" draggable="false">
-                        <input  type="date" 
-                                className="form-control form-control-lg" 
-                                id="limitDateTweet" 
-                                placeholder="LimitDate" 
-                                value={this.formatDate( new Date(this.state.limitDate))}
-                                onChange={this.onChangeLimitDate}
-                                pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/>
-                        <label for="limitDateTweet">LimitDate</label>
-                    </div>
-                </div>
                 
+                </div>                
             </div>
         );
     }
