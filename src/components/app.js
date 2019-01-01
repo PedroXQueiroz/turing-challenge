@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Link, HashRouter } from "react-router-dom";
 
 import ThemeSwitchableComponent from './theme-switchable-component';
 import TweetsGrid from './tweets-grid';
@@ -24,15 +24,15 @@ class App extends ThemeSwitchableComponent{
     
     render(){
         return(
-        <BrowserRouter>
+        <HashRouter>
             <div>
                 <nav class="app-header">
                     <div>
-                        <Link to="/">
+                        <Link to="">
                             <h2> Tweets </h2>
                         </Link>
                         
-                        <Link to="/config">
+                        <Link to="config">
                             <button className="btn btn-default btn-sm edit-grid-button" href="/config">
                                 <span className="fa fa-cog"></span> Edit
                             </button>
@@ -40,14 +40,12 @@ class App extends ThemeSwitchableComponent{
                     </div>
                 </nav>
                 
-                <div className="page-container">
-                    <Switch>
-                        <Route path="/" exact={true} component={TweetsGrid} />
-                        <Route path="/config" component={TweetsGridConfig} />
-                    </Switch>
+                <div className="page-container">                    
+                    <Route path="" exact={true} component={TweetsGrid} />
+                    <Route path="/config" exact={true} component={TweetsGridConfig} />
                 </div>
             </div>
-        </BrowserRouter>
+        </HashRouter>
         );
     }
 }

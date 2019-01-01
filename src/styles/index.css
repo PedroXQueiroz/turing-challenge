@@ -6,6 +6,10 @@ body{
     min-height: 100vh;
 }
 
+.btn-primary{
+    margin: 0.5rem;
+}
+
 .app-header{
     top: 0;
     height: 5rem;
@@ -234,8 +238,6 @@ body{
 }
 
 /* OCEAN THEME */
-
-
 .ocean .app-header{
     background: #107dac;
     color: white
