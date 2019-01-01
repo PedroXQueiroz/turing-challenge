@@ -37,6 +37,8 @@ body{
     width: 100%;
     padding: 1.5rem;
     padding-top: 1rem;
+    display: flex;
+    justify-content: center;
 }
 
 .time-lines-container{
@@ -44,6 +46,10 @@ body{
     overflow-x: overlay;
     overflow-y: overlay;
     max-height: calc(100vh - 6rem);
+}
+
+.time-lines-container::-webkit-scrollbar { 
+    display: none; 
 }
 
 .tweet .tweet-header{
@@ -163,6 +169,13 @@ body{
     }
 }
 
+@media (min-width: 750px){
+    
+    .time-lines-container > .col-lg-4{
+        max-width: 23rem;
+    }
+}
+
 @media (max-width: 630px){
     body{
         overflow-y: overlay;
@@ -171,7 +184,7 @@ body{
     .config-page{
         overflow-y: unset;
         height: fit-content;
-    }
+    } 
 }
 
 .form-group.floating-label{
