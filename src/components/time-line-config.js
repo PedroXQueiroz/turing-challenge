@@ -17,11 +17,8 @@ class TimeLineConfig extends ThemeSwitchableComponent{
             userName : props.userName,
             maxTweets: props.maxTweets,
             limitDate: props.limitDate,
-            onDropCallback: props.onDropCallback,
-            nextConfigId: props.nextConfigId,
-            previousConfigId: props.previousConfigId
         };
-
+        
         this._localStorageClient = new LocalStorageClient();
 
         this.onDragOver = e => this.onDragOverHandler(e);
@@ -37,12 +34,8 @@ class TimeLineConfig extends ThemeSwitchableComponent{
         this.onDragEndHandler = async function(e)
         {
             await this._localStorageClient.swapTimeLinesConfigs(this.state.id, TimeLineConfig._configToSwap.state.id);
-                
-            var swapState = TimeLineConfig._configToSwap.state;
-            var currentConfigState = this.state;
-            
-            this.setState((state, props) => swapState );
-            TimeLineConfig._configToSwap.setState((state, props) => currentConfigState );
+            TimeLineConfig.swapTimeLinesConfigsEvent.emit('swap-config', {currentId: this.state.id, swapId:  TimeLineConfig._configToSwap.state.id});
+            TimeLineConfig.swapTimeLinesConfigsEvent.emit('swap-config', {currentId: TimeLineConfig._configToSwap.state.id, swapId: this.state.id});
         }
     
         this.onChangeUserName = e => this.onChangeUserNameHandler(e);
@@ -110,13 +103,32 @@ class TimeLineConfig extends ThemeSwitchableComponent{
 
     }
 
+    async setupNextAndPrevious(configId){
+        var nextConfig = await this._localStorageClient.getNextTimeLineConfig(configId);
+        var previousConfig = await this._localStorageClient.getPreviousTimeLineConfig(configId);
+        
+        this.setState((state, props) => { 
+            return { 
+                hasNext: nextConfig ? true : false, 
+                hasPrevious: previousConfig? true : false
+            } 
+        }, () => console.log(this.state));
+    }
+
     async loadConfigData(configId){
+        
         var config = await this._localStorageClient.getTimeLineConfig(configId);
         this.setState(config);
+
+        await this.setupNextAndPrevious(configId)
     }
 
     formatDate(date){
         return moment(date).format('YYYY-MM-DD');
+    }
+
+    componentWillMount(){
+        this.setupNextAndPrevious(this.state.id);
     }
 
     render(){
@@ -129,9 +141,9 @@ class TimeLineConfig extends ThemeSwitchableComponent{
                 <div class="card card-body" draggable="true" >
                     
                     <div class="row time-line-config-header">
-                        <i class="fa fa-angle-left" onClick={this.swapToPreviousConfig}/>
+                        {this.state.hasPrevious ? <i class="fa fa-angle-left" onClick={this.swapToPreviousConfig}/> : <i/>}
                         <span>Index</span>
-                        <i class="fa fa-angle-right" onClick={this.swapToNextConfig}/>
+                        {this.state.hasNext ? <i class="fa fa-angle-right" onClick={this.swapToNextConfig}/> : <i/>}
                     </div>
                     
                     <div className="form-group floating-label" draggable="false">

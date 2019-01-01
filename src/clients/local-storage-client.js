@@ -37,7 +37,7 @@ class LocalStorageClient{
 
         if(configIndex >= configs.length)
         {
-            throw { message: 'no exists next time line configuration' };
+            return null;
         }
 
         return configs[configIndex + 1];
@@ -49,7 +49,7 @@ class LocalStorageClient{
 
         if(configIndex <= 0)
         {
-            throw { message: 'no exists previous time line configuration' };
+            return null;
         }
 
         return configs[configIndex - 1];
