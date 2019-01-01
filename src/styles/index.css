@@ -36,6 +36,7 @@
 .page-container{
     width: 100%;
     padding: 2.5rem;
+    padding-top: 1rem;
 }
 
 .time-lines-container{
@@ -118,6 +119,16 @@
 
     .tweet{
         min-width: 100%;
+    }
+
+    .grid-config-page{
+        overflow-y: overlay;
+        height: fit-content;
+        max-height: calc(100vh - 10rem);
+    }
+
+    .grid-config{
+        height: fit-content;
     }
     
     .time-line-config .card {
