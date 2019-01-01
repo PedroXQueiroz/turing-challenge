@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
+import ReactDOM from "react-dom";
+import EventEmitter from 'events';
 
 import Tweet from './tweet';
+
 import TwitterClient from '../clients/twitter-client';
+import LocalStorageClient from '../clients/local-storage-client';
 
 class TimeLine extends Component{
     
@@ -9,6 +13,7 @@ class TimeLine extends Component{
         super();
         
         this.state = {
+            timeLineId : props.timeLineId,
             userName: props.userName,
             isEditing: props.isEditing,
             maxTweets: props.maxTweets,
@@ -17,6 +22,64 @@ class TimeLine extends Component{
         }
 
         this._twitterClient = new TwitterClient();
+        this._localStorageClient = new LocalStorageClient()
+
+        this.onTouchStart = e => this.onTouchStartHandler(e);
+        this.onTouchMove = e => this.onTouchMoveHandler(e);
+        this.onTouchEnd = e => this.onTouchEndHandler(e);
+
+        TimeLine.swipeEvent.addListener('swipe', (swipeToTimeLineId) => {
+            
+            if(swipeToTimeLineId != this.state.timeLineId)
+            {
+                return;
+            }
+            
+            this.swipeToThisTimeLine();
+        })
+    }
+    
+    swipeToThisTimeLine(){
+        this._scrollContainer.scrollTo({ left: this._timeLineElement.offsetLeft - 30, behavior: 'smooth' });
+    }
+
+    onTouchStartHandler(e){
+        this.initialXPosition = e.touches[0].clientX;
+    }
+    
+    onTouchMoveHandler(e){
+        this.lastXPosition = e.touches[0].clientX;
+    }
+
+    async onTouchEndHandler(e){
+        var motion = this.lastXPosition - this.initialXPosition;
+
+        var absoluteMotion = Math.abs(motion);
+
+        var motionLimit = ( window.innerWidth * 25 ) / 100;
+
+        //the movement has traveled more than 75% of the screen
+        if(absoluteMotion > motionLimit)
+        {
+            var timeLineToSwipe = null;
+            
+            //the slide went to the right
+            if( motion > 0 ) 
+            {
+                timeLineToSwipe = await this._localStorageClient.getPreviousTimeLineConfig(this.state.timeLineId);
+            }else{                
+                timeLineToSwipe = await this._localStorageClient.getNextTimeLineConfig(this.state.timeLineId);
+            }
+
+            if(timeLineToSwipe)
+            {
+                console.log('swipping');
+                TimeLine.swipeEvent.emit('swipe', timeLineToSwipe.id);
+            }
+        }else{
+            TimeLine.swipeEvent.emit('swipe', this.state.id);
+        }
+
     }
 
     async componentWillMount(){
@@ -26,6 +89,11 @@ class TimeLine extends Component{
                 tweets: tweets
             };
         })
+    }
+
+    componentDidMount(){
+        this._timeLineElement = ReactDOM.findDOMNode(this);
+        this._scrollContainer = this._timeLineElement.closest('.time-lines-container');
     }
 
     getMediasArray(tweet)
@@ -45,7 +113,10 @@ class TimeLine extends Component{
     
     render(){
         return(
-            <div className="col-lg-4">
+            <div className="col-lg-4" 
+                onTouchStart={this.onTouchStart} 
+                onTouchMove={this.onTouchMove}
+                onTouchEnd={this.onTouchEnd}>
                 <h3>{this.state.userName}</h3>
 
                 <div className="tweets-container">
@@ -77,5 +148,7 @@ class TimeLine extends Component{
         )
     }
 }
+
+TimeLine.swipeEvent = new EventEmitter();
 
 export default TimeLine;

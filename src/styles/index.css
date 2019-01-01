@@ -40,7 +40,8 @@
 
 .time-lines-container{
     display: flex;
-    overflow: overlay;
+    overflow-x: hidden;
+    overflow-y: overlay;
 }
 
 .tweet .tweet-header{

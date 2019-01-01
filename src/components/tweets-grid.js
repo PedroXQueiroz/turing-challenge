@@ -34,6 +34,7 @@ class TweetsGrid extends Component {
                 {this.state.timeLinesConfig.map((entry) => 
                     
                     <TimeLine
+                        timeLineId = {entry.id}
                         userName = {entry.userName}
                         maxTweets = {entry.maxTweets}
                         isEditing = {this.state.isEditing} 
