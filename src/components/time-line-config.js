@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import EventEmitter from 'events';
+import ReactDOM from "react-dom";
 
 import LocalStorageClient from '../clients/local-storage-client';
 
@@ -124,6 +125,14 @@ class TimeLineConfig extends ThemeSwitchableComponent{
             TimeLineConfig.timeLineConfigsEvent.emit('swap-config', {currentId: previousConfig.id, swapId: this.state.id});
         }
 
+        this.deleteConfig = e => this.deleteConfigHandler(e);
+
+        this.deleteConfigHandler = async function(){
+            await this._localStorageClient.deleteTimeLineConfig(this.state.id);
+            this._timeLineConfigContainer.remove();
+            TimeLineConfig.timeLineConfigsEvent.emit('update-index');
+        }
+
         TimeLineConfig.timeLineConfigsEvent.addListener('update-index', ()=>{
             this.setIndex(this.state.id);
         })
@@ -173,6 +182,10 @@ class TimeLineConfig extends ThemeSwitchableComponent{
         this.setIndex(this.state.id);
     }
 
+    componentDidMount(){
+        this._timeLineConfigContainer = ReactDOM.findDOMNode(this).closest('.time-line-config-container');
+    }
+
     render(){
         return(
             <div id={this.state.id} 
@@ -183,10 +196,13 @@ class TimeLineConfig extends ThemeSwitchableComponent{
                 <div class="card card-body" draggable="true" >
                     {
                         !this.state.isNew &&
-                        <div class="row time-line-config-header">
-                            {this.state.hasPrevious ? <i class="fa fa-angle-left" onClick={this.swapToPreviousConfig}/> : <i/>}
-                            <span> {this.state.index} / {this.state.total} </span>
-                            {this.state.hasNext ? <i class="fa fa-angle-right" onClick={this.swapToNextConfig}/> : <i/>}
+                        <div>
+                            <div class="row time-line-config-header">
+                                {this.state.hasPrevious ? <i class="fa fa-angle-left" onClick={this.swapToPreviousConfig}/> : <i/>}
+                                <span> {this.state.index} / {this.state.total} </span>
+                                {this.state.hasNext ? <i class="fa fa-angle-right" onClick={this.swapToNextConfig}/> : <i/>}
+                                <i class="fa fa-times-circle" onClick={this.deleteConfig}></i>
+                            </div>
                         </div>
                     }
                     

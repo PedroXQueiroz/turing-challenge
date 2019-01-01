@@ -92,8 +92,6 @@ class LocalStorageClient{
     async addTimeLineConfig(config){
         var configs = await this.getTimeLinesConfig();
 
-        debugger;
-
         var lastId = configs.map(config => config.id ).reduce((a, b) => Math.max(a, b));
         var currentId = lastId + 1;
         config.id = currentId;
@@ -113,6 +111,17 @@ class LocalStorageClient{
         var config = configs[configIndex];
         configs[configIndex] = configs[configToSwapIndex];
         configs[configToSwapIndex] = config;
+
+        await this.setIimeLinesConfig(configs);
+    }
+
+    async deleteTimeLineConfig(configId)
+    {
+        var configs = await this.getTimeLinesConfig();
+
+        var configIndex = configs.findIndex(config => config.id == configId);
+
+        var updatedConfigList =  configs.splice(configIndex, 1);
 
         await this.setIimeLinesConfig(configs);
     }

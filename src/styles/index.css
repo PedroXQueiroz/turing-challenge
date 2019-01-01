@@ -1,5 +1,5 @@
-:root {
-    color : #969696;
+body{
+    overflow: hidden;
 }
 
 .app > div {
@@ -41,8 +41,9 @@
 
 .time-lines-container{
     display: flex;
-    overflow-x: hidden;
+    overflow-x: overlay;
     overflow-y: overlay;
+    max-height: calc(100vh - 6rem);
 }
 
 .tweet .tweet-header{
@@ -129,10 +130,6 @@
 
 @media (max-width: 750px){
     
-    body{
-        overflow: hidden;
-    }
-    
     .tweets-container {
         max-width: 100%;
         width: 100vh;
@@ -151,6 +148,10 @@
         flex-wrap: unset;
     }
 
+    .time-lines-container{
+        overflow: hidden;
+    }
+
     .time-line-config-header.top{
         visibility: hidden;
         height: 0;
@@ -159,6 +160,17 @@
 
     .time-line-config-header.side{
         visibility: visible;
+    }
+}
+
+@media (max-width: 630px){
+    body{
+        overflow-y: overlay;
+    }
+
+    .config-page{
+        overflow-y: unset;
+        height: fit-content;
     }
 }
 
