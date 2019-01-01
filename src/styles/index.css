@@ -82,6 +82,7 @@
 
 .config-page > div {
     max-width: 50rem;
+    width: 100%;
 }
 
 .time-line-config{
