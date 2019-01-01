@@ -113,6 +113,7 @@ class TimeLineConfig extends ThemeSwitchableComponent{
             
             TimeLineConfig.timeLineConfigsEvent.emit('swap-config', {currentId: this.state.id, swapId: nextConfig.id});
             TimeLineConfig.timeLineConfigsEvent.emit('swap-config', {currentId: nextConfig.id, swapId: this.state.id});
+            TimeLineConfig.timeLineConfigsEvent.emit('scroll', nextConfig.id);
         }
         
         this.swapToPreviousConfig = e => this.swapToPreviousConfigHandler();
@@ -123,6 +124,23 @@ class TimeLineConfig extends ThemeSwitchableComponent{
             
             TimeLineConfig.timeLineConfigsEvent.emit('swap-config', {currentId: this.state.id, swapId: previousConfig.id});
             TimeLineConfig.timeLineConfigsEvent.emit('swap-config', {currentId: previousConfig.id, swapId: this.state.id});
+            TimeLineConfig.timeLineConfigsEvent.emit('scroll', previousConfig.id);
+
+        }
+
+        TimeLineConfig.timeLineConfigsEvent.addListener('scroll', (configId) => {
+            if(configId != this.state.id)
+            {
+                return
+            }
+            
+            this.scrollToThisConfig();
+            
+        })
+        
+        this.scrollToThisConfig = function(){
+            var scrollContainer = this._timeLineConfigContainer.closest('.config-container-scroll');
+            scrollContainer.scrollTo({ left: ( this._timeLineConfigContainer.offsetLeft  - 30), behavior: 'smooth' })
         }
 
         this.deleteConfig = e => this.deleteConfigHandler(e);
