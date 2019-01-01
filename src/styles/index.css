@@ -35,7 +35,7 @@
 
 .page-container{
     width: 100%;
-    padding: 2.5rem;
+    padding: 1.5rem;
     padding-top: 1rem;
 }
 
@@ -75,8 +75,13 @@
     font-size:0.75rem;
 }
 
-.config-container{
+.config-page{
+    display: flex;
     justify-content: center;
+}
+
+.config-page > div {
+    max-width: 50rem;
 }
 
 .time-line-config{
@@ -89,11 +94,19 @@
     max-width: 20.5rem;
 }
 
+.time-line-config-container{
+    min-width: 18rem;
+}
+
 .time-line-config-header{
     display: flex;
     justify-content: space-between;
     padding: 1rem;
     padding-top: 0;
+}
+
+.config-container-scroll{
+    display: flex;
 }
 
 @media (max-width: 750px){
@@ -114,20 +127,9 @@
         min-width: 100%;
     }
 
-    .grid-config-page{
-        overflow-y: overlay;
-        height: fit-content;
-        max-height: calc(100vh - 10rem);
-    }
-
-    .grid-config{
-        height: fit-content;
-    }
-
     .config-container-scroll{  
         width: 100%;
         overflow-x: overlay;
-        display: flex;
     }
 
     .time-line-config-header.top{

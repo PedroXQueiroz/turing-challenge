@@ -39,29 +39,24 @@ class TweetsGridConfig extends Component{
 
     render(){
         return (
-            <div className="container grid-config-page">
-                <div class="grid-config">
-                    <div className="row">
-                        <h2> Configurations</h2>
-                    </div>
-
-                    <div class="row"> <h3> Theme </h3> </div>
+            <div class="config-page">
+                <div>
+                    <h2> Configurations</h2>
                     
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <select class="form-control" onChange={this.changeTheme}>
-                                <option value="minimalist" selected={ThemeSwitchableComponent.currentTheme == 'minimalist'}> minimalist </option>
-                                <option value="ocean" selected={ThemeSwitchableComponent.currentTheme == 'ocean'}> ocean </option>
-                                <option value="dark" selected={ThemeSwitchableComponent.currentTheme == 'dark'}> dark </option>
-                            </select>
-                        </div>
-                        
-                    </div>
-
-                    <hr class="row"/>
+                    <h3> Theme </h3>
                     
-                    <div class="row"> <h3> TimeLines </h3> </div>
-
+                    <div class="form-group col-md-6">
+                        <select class="form-control" onChange={this.changeTheme}>
+                            <option value="minimalist" selected={ThemeSwitchableComponent.currentTheme == 'minimalist'}> minimalist </option>
+                            <option value="ocean" selected={ThemeSwitchableComponent.currentTheme == 'ocean'}> ocean </option>
+                            <option value="dark" selected={ThemeSwitchableComponent.currentTheme == 'dark'}> dark </option>
+                        </select>
+                    </div>
+                    
+                    <hr/>
+                    
+                    <h3> TimeLines </h3>
+                    
                     <div className="config-container-scroll">
                         
                         {this.state.timeLinesConfig.map((config, index) => 
