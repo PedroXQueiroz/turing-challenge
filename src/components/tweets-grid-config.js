@@ -62,7 +62,8 @@ class TweetsGridConfig extends Component{
                     
                     <div class="row"> <h3> TimeLines </h3> </div>
 
-                    <div className="config-container row">
+                    <div className="config-container-scroll">
+                        
                         {this.state.timeLinesConfig.map((config, index) => 
                             <div className="time-line-config-container">
                                 <TimeLineConfig
@@ -73,6 +74,7 @@ class TweetsGridConfig extends Component{
                                 /> 
                             </div>
                         )}
+                        
                     </div>
                 </div>
             </div>

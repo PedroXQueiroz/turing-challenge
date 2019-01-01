@@ -140,7 +140,7 @@ class TimeLineConfig extends ThemeSwitchableComponent{
                 
                 <div class="card card-body" draggable="true" >
                     
-                    <div class="row time-line-config-header top">
+                    <div class="row time-line-config-header">
                         {this.state.hasPrevious ? <i class="fa fa-angle-left" onClick={this.swapToPreviousConfig}/> : <i/>}
                         <span>Index</span>
                         {this.state.hasNext ? <i class="fa fa-angle-right" onClick={this.swapToNextConfig}/> : <i/>}
@@ -180,13 +180,6 @@ class TimeLineConfig extends ThemeSwitchableComponent{
                             <label for="limitDateTweet">LimitDate</label>
                         </div>
                     </div>
-
-                    <div class="row time-line-config-header side">
-                        {this.state.hasPrevious ? <i class="fa fa-angle-up" onClick={this.swapToPreviousConfig}/> : <i/>}
-                        <span>Index</span>
-                        {this.state.hasNext ? <i class="fa fa-angle-down" onClick={this.swapToNextConfig}/> : <i/>}
-                    </div>
-                
                 </div>                
             </div>
         );

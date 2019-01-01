@@ -96,13 +96,6 @@
     padding-top: 0;
 }
 
-.time-line-config-header.side{
-    flex-direction: column;
-    align-items: center;
-    margin: 0.25rem;
-
-}
-
 @media (max-width: 750px){
     
     body{
@@ -130,11 +123,13 @@
     .grid-config{
         height: fit-content;
     }
-    
-    .time-line-config .card {
-        flex-direction: row;
+
+    .config-container-scroll{  
+        width: 100%;
+        overflow-x: overlay;
+        display: flex;
     }
-    
+
     .time-line-config-header.top{
         visibility: hidden;
         height: 0;
@@ -143,24 +138,6 @@
 
     .time-line-config-header.side{
         visibility: visible;
-    }
-}
-
-@media (min-width: 750px){
-    
-    .time-line-config .card {
-        flex-direction: column;
-    }
-    
-    .time-line-config-header.top{
-        visibility: visible;
-    }
-
-    .time-line-config-header.side{
-        visibility: hidden;
-        height: 0;
-        padding: 0;
-        margin: 0;
     }
 }
 
