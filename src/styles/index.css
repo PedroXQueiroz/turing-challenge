@@ -78,11 +78,14 @@
 .config-page{
     display: flex;
     justify-content: center;
+    overflow-y: overlay;
+    height: calc(100vh - 7rem);
 }
 
 .config-page > div {
     max-width: 60rem;
     width: 100%;
+    height: fit-content;
 }
 
 .time-line-config{
