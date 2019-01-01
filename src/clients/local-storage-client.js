@@ -89,6 +89,20 @@ class LocalStorageClient{
         this.setIimeLinesConfig(configs);
     }
 
+    async addTimeLineConfig(config){
+        var configs = await this.getTimeLinesConfig();
+
+        debugger;
+
+        var lastId = configs.map(config => config.id ).reduce((a, b) => Math.max(a, b));
+        var currentId = lastId + 1;
+        config.id = currentId;
+
+        configs.push(config);
+
+        await this.setIimeLinesConfig(configs);
+    }
+
     async swapTimeLinesConfigs(configId, configToSwapId){
             
         var configs = await this.getTimeLinesConfig();

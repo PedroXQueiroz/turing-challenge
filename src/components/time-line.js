@@ -76,8 +76,6 @@ class TimeLine extends Component{
                 console.log('swipping');
                 TimeLine.swipeEvent.emit('swipe', timeLineToSwipe.id);
             }
-        }else{
-            TimeLine.swipeEvent.emit('swipe', this.state.id);
         }
 
     }

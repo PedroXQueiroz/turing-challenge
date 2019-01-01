@@ -18,9 +18,27 @@ class TweetsGridConfig extends Component{
         this._localStorageClient = new LocalStorageClient();
 
         this.changeTheme = e => this.changeThemeHandler(e);
+
+        this.onSave = e => this.onSaveCallback();
+
+        this.saveTimeLineConfig = e => this.saveTimeLineConfigHandler();
     }
 
     async componentWillMount(){
+        
+        var configs = await this._localStorageClient.getTimeLinesConfig();
+        this.setState((staten, props) => {
+            return { timeLinesConfig: configs };
+        });
+    }
+
+    saveTimeLineConfigHandler(){
+        TimeLineConfig.timeLineConfigsEvent.emit('save');
+        TimeLineConfig.timeLineConfigsEvent.emit('update-index');
+    }
+
+    async onSaveCallback(){
+        
         var configs = await this._localStorageClient.getTimeLinesConfig();
         this.setState((staten, props) => {
             return { timeLinesConfig: configs };
@@ -34,8 +52,6 @@ class TweetsGridConfig extends Component{
         ThemeSwitchableComponent.switchTheme(selectedTheme);
         await this._localStorageClient.setTheme(selectedTheme);
     }
-
-    
 
     render(){
         return (
@@ -71,7 +87,29 @@ class TweetsGridConfig extends Component{
                         )}
                         
                     </div>
+
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-timeline-modal"> Add TimeLine </button>
                 </div>
+
+                <div className="modal fade add-timeline-modal" id="add-timeline-modal" role="dialog">
+                    <div className="modal-dialog">
+                        <div class="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title"> New TimeLine </h5>
+                            </div>
+
+                            <TimeLineConfig 
+                                isNew = {true} 
+                                onSaveCallback = {this.onSave}/>
+
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={this.saveTimeLineConfig}>Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         );
     }

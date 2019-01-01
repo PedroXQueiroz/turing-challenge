@@ -12,13 +12,36 @@ class TimeLineConfig extends ThemeSwitchableComponent{
     constructor(props){
         super();
         
-        this.state = {
-            id: props.configId,
-            userName : props.userName,
-            maxTweets: props.maxTweets,
-            limitDate: props.limitDate,
-        };
-        
+        if(!props.isNew){
+            
+            this.state = {
+                id: props.configId,
+                userName : props.userName,
+                maxTweets: props.maxTweets,
+                limitDate: props.limitDate,
+            };
+        }else{
+            this.state = {
+                isNew: true,
+                onSaveCallback: props.onSaveCallback
+            };
+
+            TimeLineConfig.timeLineConfigsEvent.addListener('save', async () => {
+                
+                var newConfig =  { 
+                    userName: this.state.userName, 
+                    maxTweets: this.state.maxTweets,
+                    limitDate: this.state.limitDate
+                }
+                
+                await this._localStorageClient.addTimeLineConfig(newConfig);
+
+                this.state.onSaveCallback();
+            })
+        }
+
+
+
         this._localStorageClient = new LocalStorageClient();
 
         this.onDragOver = e => this.onDragOverHandler(e);
@@ -34,8 +57,8 @@ class TimeLineConfig extends ThemeSwitchableComponent{
         this.onDragEndHandler = async function(e)
         {
             await this._localStorageClient.swapTimeLinesConfigs(this.state.id, TimeLineConfig._configToSwap.state.id);
-            TimeLineConfig.swapTimeLinesConfigsEvent.emit('swap-config', {currentId: this.state.id, swapId:  TimeLineConfig._configToSwap.state.id});
-            TimeLineConfig.swapTimeLinesConfigsEvent.emit('swap-config', {currentId: TimeLineConfig._configToSwap.state.id, swapId: this.state.id});
+            TimeLineConfig.timeLineConfigsEvent.emit('swap-config', {currentId: this.state.id, swapId:  TimeLineConfig._configToSwap.state.id});
+            TimeLineConfig.timeLineConfigsEvent.emit('swap-config', {currentId: TimeLineConfig._configToSwap.state.id, swapId: this.state.id});
         }
     
         this.onChangeUserName = e => this.onChangeUserNameHandler(e);
@@ -68,7 +91,7 @@ class TimeLineConfig extends ThemeSwitchableComponent{
             }, () => this._localStorageClient.updateTimeLineConfig(this.state));
         }
 
-        TimeLineConfig.swapTimeLinesConfigsEvent.addListener('swap-config', (swapTuple) => {
+        TimeLineConfig.timeLineConfigsEvent.addListener('swap-config', (swapTuple) => {
             
             var currentId = swapTuple.currentId;
             var swapId = swapTuple.swapId;
@@ -87,8 +110,8 @@ class TimeLineConfig extends ThemeSwitchableComponent{
             var nextConfig = await this._localStorageClient.getNextTimeLineConfig(this.state.id);
             await this._localStorageClient.swapTimeLinesConfigs(this.state.id, nextConfig.id);
             
-            TimeLineConfig.swapTimeLinesConfigsEvent.emit('swap-config', {currentId: this.state.id, swapId: nextConfig.id});
-            TimeLineConfig.swapTimeLinesConfigsEvent.emit('swap-config', {currentId: nextConfig.id, swapId: this.state.id});
+            TimeLineConfig.timeLineConfigsEvent.emit('swap-config', {currentId: this.state.id, swapId: nextConfig.id});
+            TimeLineConfig.timeLineConfigsEvent.emit('swap-config', {currentId: nextConfig.id, swapId: this.state.id});
         }
         
         this.swapToPreviousConfig = e => this.swapToPreviousConfigHandler();
@@ -97,9 +120,13 @@ class TimeLineConfig extends ThemeSwitchableComponent{
             var previousConfig = await this._localStorageClient.getPreviousTimeLineConfig(this.state.id);
             await this._localStorageClient.swapTimeLinesConfigs(this.state.id, previousConfig.id);
             
-            TimeLineConfig.swapTimeLinesConfigsEvent.emit('swap-config', {currentId: this.state.id, swapId: previousConfig.id});
-            TimeLineConfig.swapTimeLinesConfigsEvent.emit('swap-config', {currentId: previousConfig.id, swapId: this.state.id});
+            TimeLineConfig.timeLineConfigsEvent.emit('swap-config', {currentId: this.state.id, swapId: previousConfig.id});
+            TimeLineConfig.timeLineConfigsEvent.emit('swap-config', {currentId: previousConfig.id, swapId: this.state.id});
         }
+
+        TimeLineConfig.timeLineConfigsEvent.addListener('update-index', ()=>{
+            this.setIndex(this.state.id);
+        })
 
     }
 
@@ -154,12 +181,14 @@ class TimeLineConfig extends ThemeSwitchableComponent{
                 onDragEnd={this.onDragEnd}> 
                 
                 <div class="card card-body" draggable="true" >
-                    
-                    <div class="row time-line-config-header">
-                        {this.state.hasPrevious ? <i class="fa fa-angle-left" onClick={this.swapToPreviousConfig}/> : <i/>}
-                        <span> {this.state.index} / {this.state.total} </span>
-                        {this.state.hasNext ? <i class="fa fa-angle-right" onClick={this.swapToNextConfig}/> : <i/>}
-                    </div>
+                    {
+                        !this.state.isNew &&
+                        <div class="row time-line-config-header">
+                            {this.state.hasPrevious ? <i class="fa fa-angle-left" onClick={this.swapToPreviousConfig}/> : <i/>}
+                            <span> {this.state.index} / {this.state.total} </span>
+                            {this.state.hasNext ? <i class="fa fa-angle-right" onClick={this.swapToNextConfig}/> : <i/>}
+                        </div>
+                    }
                     
                     <div>
                         <div className="form-group floating-label" draggable="false">
@@ -203,6 +232,6 @@ class TimeLineConfig extends ThemeSwitchableComponent{
 
 TimeLineConfig._configToSwap = null;
 
-TimeLineConfig.swapTimeLinesConfigsEvent = new EventEmitter();
+TimeLineConfig.timeLineConfigsEvent = new EventEmitter();
 
 export default TimeLineConfig;

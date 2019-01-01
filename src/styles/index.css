@@ -118,6 +118,15 @@
     flex-wrap: wrap;
 }
 
+.add-timeline-modal .time-line-config .card{
+    background: white;
+    border: none;
+}
+
+.add-timeline-modal .modal-dialog{
+    width: fit-content;
+}
+
 @media (max-width: 750px){
     
     body{
