@@ -81,7 +81,7 @@
 }
 
 .config-page > div {
-    max-width: 50rem;
+    max-width: 60rem;
     width: 100%;
 }
 
@@ -108,6 +108,7 @@
 
 .config-container-scroll{
     display: flex;
+    flex-wrap: wrap;
 }
 
 @media (max-width: 750px){
@@ -131,6 +132,7 @@
     .config-container-scroll{  
         width: 100%;
         overflow-x: overlay;
+        flex-wrap: unset;
     }
 
     .time-line-config-header.top{
