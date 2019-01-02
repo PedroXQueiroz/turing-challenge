@@ -73,7 +73,7 @@ class TweetsGridConfig extends Component{
                     
                     <hr/>
                     
-                    <h3> TimeLines </h3>
+                    <h3> Timelines </h3>
                     
                     <div className="config-container-scroll">
                         
@@ -97,7 +97,7 @@ class TweetsGridConfig extends Component{
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title"> New TimeLine </h5>
+                                <h5 className="modal-title"> New Timeline </h5>
                             </div>
 
                             <TimeLineConfig 

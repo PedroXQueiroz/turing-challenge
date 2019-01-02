@@ -175,7 +175,7 @@ class TimeLineConfig extends ThemeSwitchableComponent{
 
         this.setState((state, props) => { 
             return { 
-                index : timelineIndex, 
+                index : timelineIndex + 1, 
                 total: countConfigs 
             } 
         });
@@ -233,7 +233,7 @@ class TimeLineConfig extends ThemeSwitchableComponent{
                                     value={this.state.userName} 
                                     onChange={this.onChangeUserName}/>
                             
-                            <label>UserName</label>
+                            <label>User Name</label>
                         </div>
 
                         <div className="form-group floating-label" draggable="false">
@@ -244,7 +244,7 @@ class TimeLineConfig extends ThemeSwitchableComponent{
                                     value={this.state.maxTweets}
                                     onChange={this.onChangeMaxTweets}/>
                             
-                            <label>MaxTweets</label>
+                            <label>Max Tweets</label>
                         </div>
 
                         <div className="form-group floating-label" draggable="false">
@@ -255,7 +255,7 @@ class TimeLineConfig extends ThemeSwitchableComponent{
                                     value={this.formatDate( new Date(this.state.limitDate))}
                                     onChange={this.onChangeLimitDate}
                                     pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/>
-                            <label>LimitDate</label>
+                            <label>Limit Date</label>
                         </div>
                     </div>
                 </div>                
