@@ -17,17 +17,10 @@ class App extends ThemeSwitchableComponent{
     }
 
     async componentWillMount(){
-        
-        var isInitiated = await this._localStorageClient.appIsInitiated();
-
-        if(!isInitiated){
-            await this._localStorageClient.initiateApp();
-        }
-
-        var theme = await this._localStorageClient.getTheme();
-        ThemeSwitchableComponent.switchTheme(theme);
+        var currentTheme = await this._localStorageClient.getTheme();
+        ThemeSwitchableComponent.switchTheme(currentTheme);
     }
-    
+
     render(){
         return(
         <HashRouter>
@@ -58,4 +51,19 @@ class App extends ThemeSwitchableComponent{
 
 export default App;
 
-ReactDOM.render(<App />, document.querySelector('.app'));
+var localStorage  = new LocalStorageClient();
+localStorage.appIsInitiated().then(isInitiated => {
+    
+    if(!isInitiated){
+
+        localStorage.initiateApp().then(() => {
+            ReactDOM.render(<App />, document.querySelector('.app'));
+        });
+
+    }else{
+        ReactDOM.render(<App />, document.querySelector('.app'));
+    }
+    
+});
+
+
