@@ -18,6 +18,12 @@ class App extends ThemeSwitchableComponent{
 
     async componentWillMount(){
         
+        var isInitiated = await this._localStorageClient.appIsInitiated();
+
+        if(!isInitiated){
+            await this._localStorageClient.initiateApp();
+        }
+
         var theme = await this._localStorageClient.getTheme();
         ThemeSwitchableComponent.switchTheme(theme);
     }

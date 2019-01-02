@@ -11,11 +11,18 @@ class LocalStorageClient{
 
     constructor(){
         this._storage = localStorage;
+    }
 
-        if(!this._storage.getItem('timeLinesConfig'))
-        {
-            this.setIimeLinesConfig(LocalStorageClient.defaultTimeLinesConfig);
-        }
+    async appIsInitiated(){
+        var isInitiated = await this._storage.getItem('initiated');
+        return isInitiated;
+    }
+
+    async initiateApp()
+    {
+        await this.setIimeLinesConfig(LocalStorageClient.defaultTimeLinesConfig);
+        await this.setTheme('minimalist');
+        await this._storage.setItem('initiated', true);
     }
 
     async getTimeLinesConfig(){
