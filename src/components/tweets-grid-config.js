@@ -51,21 +51,23 @@ class TweetsGridConfig extends Component{
         
         ThemeSwitchableComponent.switchTheme(selectedTheme);
         await this._localStorageClient.setTheme(selectedTheme);
+
+        this.forceUpdate();
     }
 
     render(){
         return (
-            <div class="config-page">
+            <div className="config-page">
                 <div>
                     <h2> Configurations</h2>
                     
                     <h3> Theme </h3>
                     
-                    <div class="form-group col-md-6">
-                        <select class="form-control" onChange={this.changeTheme}>
-                            <option value="minimalist" selected={ThemeSwitchableComponent.currentTheme == 'minimalist'}> minimalist </option>
-                            <option value="ocean" selected={ThemeSwitchableComponent.currentTheme == 'ocean'}> ocean </option>
-                            <option value="dark" selected={ThemeSwitchableComponent.currentTheme == 'dark'}> dark </option>
+                    <div className="form-group col-md-6">
+                        <select className="form-control" onChange={this.changeTheme} value={ThemeSwitchableComponent.currentTheme}>
+                            <option value="minimalist"> minimalist </option>
+                            <option value="ocean"> ocean </option>
+                            <option value="dark"> dark </option>
                         </select>
                     </div>
                     
@@ -76,9 +78,8 @@ class TweetsGridConfig extends Component{
                     <div className="config-container-scroll">
                         
                         {this.state.timeLinesConfig.map((config, index) => 
-                            <div className="time-line-config-container">
+                            <div className="time-line-config-container" key={config.id}>
                                 <TimeLineConfig
-                                    key={config.id}
                                     configId={config.id}
                                     userName={config.userName}
                                     maxTweets={config.maxTweets}
@@ -89,12 +90,12 @@ class TweetsGridConfig extends Component{
                         
                     </div>
 
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-timeline-modal"> Add TimeLine </button>
+                    <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#add-timeline-modal"> Add TimeLine </button>
                 </div>
 
                 <div className="modal fade add-timeline-modal" id="add-timeline-modal" role="dialog">
                     <div className="modal-dialog">
-                        <div class="modal-content">
+                        <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title"> New TimeLine </h5>
                             </div>

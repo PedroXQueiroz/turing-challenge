@@ -14,6 +14,10 @@ class ThemeSwitchableComponent extends Component
     
     setTheme(theme)
     {
+        if(!this.componentContainer){
+            return;
+        }
+        
         var classes = this.componentContainer.className;
     
         var cleandClasses = classes.replace(/(ocean)|(minimalist)|(dark)/, '');
