@@ -229,7 +229,7 @@ class TimeLineConfig extends ThemeSwitchableComponent{
                             <input  type="text" 
                                     className="form-control form-control-lg" 
                                     id="userName" 
-                                    placeholder="UserName" 
+                                    placeholder="User Name" 
                                     value={this.state.userName} 
                                     onChange={this.onChangeUserName}/>
                             
@@ -240,7 +240,7 @@ class TimeLineConfig extends ThemeSwitchableComponent{
                             <input  type="number" 
                                     className="form-control form-control-lg" 
                                     id="maxTweet" 
-                                    placeholder="MaxTweet" 
+                                    placeholder="Max Tweet" 
                                     value={this.state.maxTweets}
                                     onChange={this.onChangeMaxTweets}/>
                             
@@ -250,7 +250,7 @@ class TimeLineConfig extends ThemeSwitchableComponent{
                         <div className="form-group floating-label" draggable="false">
                             <input  type="date" 
                                     className="form-control form-control-lg" 
-                                    id="limitDateTweet" 
+                                    id="limitDate Tweet" 
                                     placeholder="LimitDate" 
                                     value={this.formatDate( new Date(this.state.limitDate))}
                                     onChange={this.onChangeLimitDate}
