@@ -45,11 +45,17 @@ body{
     justify-content: center;
 }
 
+.time-lines-container-scroll{
+    max-width: 100%;
+    overflow-x: overlay;
+}
+
 .time-lines-container{
     display: flex;
     overflow-x: overlay;
     overflow-y: overlay;
     max-height: calc(100vh - 6rem);
+    width: fit-content;
 }
 
 .time-lines-container::-webkit-scrollbar { 
@@ -170,16 +176,11 @@ body{
 
     .time-lines-container{
         overflow: hidden;
+        width: unset;
     }
 
-    .time-line-config-header.top{
-        visibility: hidden;
-        height: 0;
-        width: 0;
-    }
-
-    .time-line-config-header.side{
-        visibility: visible;
+    .time-lines-container-scroll{
+        overflow: hidden;
     }
 }
 
