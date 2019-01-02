@@ -26,7 +26,7 @@ class App extends ThemeSwitchableComponent{
         return(
         <HashRouter>
             <div>
-                <nav class="app-header">
+                <nav className="app-header">
                     <div>
                         <Link to="">
                             <h2> Tweets </h2>

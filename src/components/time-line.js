@@ -131,6 +131,7 @@ class TimeLine extends Component{
                         })
                         .map(tweet =>
                         <Tweet
+                            key={tweet.id}
                             userName = { this.state.userName }
                             tweetId = { tweet.id_str }
                             content={ tweet.text || tweet.full_text } 

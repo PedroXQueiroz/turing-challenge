@@ -78,6 +78,7 @@ class TweetsGridConfig extends Component{
                         {this.state.timeLinesConfig.map((config, index) => 
                             <div className="time-line-config-container">
                                 <TimeLineConfig
+                                    key={config.id}
                                     configId={config.id}
                                     userName={config.userName}
                                     maxTweets={config.maxTweets}
