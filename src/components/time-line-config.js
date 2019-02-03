@@ -3,6 +3,7 @@ import EventEmitter from 'events';
 import ReactDOM from "react-dom";
 
 import LocalStorageClient from '../clients/local-storage-client';
+import TwitterClient from '../clients/twitter-client';
 
 import ThemeSwitchableComponent from './theme-switchable-component';
 
@@ -12,6 +13,8 @@ class TimeLineConfig extends ThemeSwitchableComponent{
 
     constructor(props){
         super();
+
+        this._twitterClient = new TwitterClient();
         
         if(!props.isNew){
             
@@ -24,7 +27,8 @@ class TimeLineConfig extends ThemeSwitchableComponent{
         }else{
             this.state = {
                 isNew: true,
-                onSaveCallback: props.onSaveCallback
+                onSaveCallback: props.onSaveCallback,
+                onSaveErrorCallback: props.onSaveErrorCallback
             };
 
             TimeLineConfig.timeLineConfigsEvent.addListener('save', async () => {
@@ -34,7 +38,15 @@ class TimeLineConfig extends ThemeSwitchableComponent{
                     maxTweets: this.state.maxTweets,
                     limitDate: this.state.limitDate
                 }
+
+                var profileData = await this._twitterClient.getProfile(this.state.userName);
                 
+                if(profileData.errors)
+                {
+                    this.state.onSaveErrorCallback(profileData.errors);
+                    return;
+                }
+
                 await this._localStorageClient.addTimeLineConfig(newConfig);
 
                 this.state.onSaveCallback();

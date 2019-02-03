@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOM from "react-dom";
+import Toastr from 'toastr';
 
 import LocalStorageClient from '../clients/local-storage-client';
 
@@ -43,6 +44,12 @@ class TweetsGridConfig extends Component{
         this.setState((staten, props) => {
             return { timeLinesConfig: configs };
         });
+    }
+
+    onSaveError(errors){
+        console.log(errors);
+        const errorMessage = errors.map(err => err.message).join(' , ');
+        Toastr.error(this, errorMessage, 'Error on Save Config' ).show();
     }
 
     async changeThemeHandler(ev){
@@ -102,7 +109,8 @@ class TweetsGridConfig extends Component{
 
                             <TimeLineConfig 
                                 isNew = {true} 
-                                onSaveCallback = {this.onSave}/>
+                                onSaveCallback = {this.onSave}
+                                onSaveErrorCallback = {this.onSaveError}/>
 
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>

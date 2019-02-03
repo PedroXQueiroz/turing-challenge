@@ -15,6 +15,7 @@
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-router-dom": "^4.3.1",
+    "toastr": "^2.1.4",
     "twitter-proxy": "^2.0.0",
     "webfonts-loader": "^4.3.0",
     "webpack": "^4.28.3"
