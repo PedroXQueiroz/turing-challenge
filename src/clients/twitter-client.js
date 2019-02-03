@@ -14,6 +14,17 @@ class TwitterClient{
 
         return tweets;
     }
+
+    async getProfile(userName)
+    {
+        var profileUrl = this._twitterProxyHost + ':7890/1.1/users/show.json?&screen_name=' + userName;
+
+        var profileRequest = new Request(profileUrl);
+
+        var profileData = await fetch(profileRequest).then(response => response.json());
+
+        return profileData;
+    }
 }
 
 export default TwitterClient;

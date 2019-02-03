@@ -18,6 +18,7 @@ class TimeLine extends Component{
             isEditing: props.isEditing,
             maxTweets: props.maxTweets,
             limitDate: props.limitDate,
+            profileImage: '',
             tweets: []
         }
 
@@ -82,9 +83,13 @@ class TimeLine extends Component{
 
     async componentWillMount(){
         var tweets = await this._twitterClient.getTweets(this.state.userName, this.state.maxTweets);
+
+        var profile = await this._twitterClient.getProfile(this.state.userName);
+
         this.setState((state, props) => {
             return {
-                tweets: tweets
+                tweets: tweets, 
+                profileImage: profile.profile_image_url
             };
         })
     }
@@ -115,8 +120,12 @@ class TimeLine extends Component{
                 onTouchStart={this.onTouchStart} 
                 onTouchMove={this.onTouchMove}
                 onTouchEnd={this.onTouchEnd}>
-                <h3>{this.state.userName}</h3>
-
+                
+                <div className="profile-panel">
+                    <img src={this.state.profileImage}/>
+                    <h3>{this.state.userName}</h3>
+                </div>
+                
                 <div className="tweets-container">
                     
                     {this.state.tweets

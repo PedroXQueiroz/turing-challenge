@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var watch = require('gulp-watch');
 var spawn = require('child_process').exec;
 
-gulp.task('watch', () => {
+var watchFunc = () => {
     return watch('src/**/*.*', () => {
         console.log('rebuilding');
         spawn('npm run build', (err, output, outErr) => {
@@ -15,6 +15,9 @@ gulp.task('watch', () => {
                 console.log("OUT ------------------------------------");
                 console.log(output)
             }
+
+            console.log(output);
         });
     });
-});
+}
+gulp.task('watch', watchFunc );
