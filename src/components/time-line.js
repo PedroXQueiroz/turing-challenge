@@ -19,6 +19,7 @@ class TimeLine extends Component{
             maxTweets: props.maxTweets,
             limitDate: props.limitDate,
             profileImage: '',
+            profileUrl: '',
             tweets: []
         }
 
@@ -89,7 +90,8 @@ class TimeLine extends Component{
         this.setState((state, props) => {
             return {
                 tweets: tweets, 
-                profileImage: profile.profile_image_url
+                profileImage: profile.profile_image_url,
+                profileUrl: 'https://twitter.com/' + this.state.userName
             };
         })
     }
@@ -121,11 +123,11 @@ class TimeLine extends Component{
                 onTouchMove={this.onTouchMove}
                 onTouchEnd={this.onTouchEnd}>
                 
-                <div className="profile-panel">
+                <a className="profile-panel" href={this.state.profileUrl} target="_blank">
                     <img src={this.state.profileImage}/>
                     <h3>{this.state.userName}</h3>
-                </div>
-                
+                </a>
+            
                 <div className="tweets-container">
                     
                     {this.state.tweets
