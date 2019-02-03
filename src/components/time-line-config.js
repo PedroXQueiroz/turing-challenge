@@ -41,6 +41,7 @@ class TimeLineConfig extends ThemeSwitchableComponent{
 
                 var profileData = await this._twitterClient.getProfile(this.state.userName);
                 
+                
                 if(profileData.errors)
                 {
                     this.state.onSaveErrorCallback(profileData.errors);
@@ -143,7 +144,7 @@ class TimeLineConfig extends ThemeSwitchableComponent{
         TimeLineConfig.timeLineConfigsEvent.addListener('scroll', (configId) => {
             if(configId != this.state.id)
             {
-                return
+                return;
             }
             
             this.scrollToThisConfig();
